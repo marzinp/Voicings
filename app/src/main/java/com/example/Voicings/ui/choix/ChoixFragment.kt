@@ -82,6 +82,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 } while (c.moveToNext())
             }
         }
+        c.close()
         var text = view.findViewById<TextView>(R.id.typeSpinnerLabel)
         text.text = "Chord Types"
         // Specify the layout to use when the list of choices appears.
@@ -106,6 +107,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 } while (c.moveToNext())
             }
         }
+        c.close()
         // Specify the layout to use when the list of choices appears.
         adapter = ArrayAdapter(this.requireContext(), R.layout.spinner_center_item, results)
         text = binding?.melodySpinnerLabel
@@ -232,6 +234,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 } while (c.moveToNext())
             }
         }
+        c.close()
         textView?.text = results.toString()
     }
 }
