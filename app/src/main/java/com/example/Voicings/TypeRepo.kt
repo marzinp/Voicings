@@ -16,11 +16,11 @@ class TypeRepo {
         val typeId: Int
         val db = getInstance()!!.openDatabase()
         val values = ContentValues()
-        values.put(Type.Companion.KEY_TypeId, type.typeId)
-        values.put(Type.Companion.KEY_Name, type.name)
+        values.put(Type.KEY_TypeId, type.typeId)
+        values.put(Type.KEY_Name, type.name)
 
         // Inserting Row
-        typeId = db!!.insert(Type.Companion.TABLE, null, values).toInt()
+        typeId = db!!.insert(Type.TABLE, null, values).toInt()
         getInstance()!!.closeDatabase()
 
         return typeId
@@ -29,7 +29,7 @@ class TypeRepo {
 
     fun delete() {
         val db = getInstance()!!.openDatabase()
-        db!!.delete(Type.Companion.TABLE, null, null)
+        db!!.delete(Type.TABLE, null, null)
         getInstance()!!.closeDatabase()
     }
 
@@ -37,9 +37,9 @@ class TypeRepo {
         private lateinit var type: Type
 
         fun createTable(): String {
-            return ("CREATE TABLE " + Type.Companion.TABLE + "("
-                    + Type.Companion.KEY_TypeId + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL   ,"
-                    + Type.Companion.KEY_Name + " TEXT )")
+            return ("CREATE TABLE " + Type.TABLE + "("
+                    + Type.KEY_TypeId + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL   ,"
+                    + Type.KEY_Name + " TEXT )")
         }
     }
 }

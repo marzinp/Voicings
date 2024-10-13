@@ -159,7 +159,6 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         parent: AdapterView<*>?, view: View,
         pos: Int, id: Long
     ) {
-        var str = view.toString()
         // An item is selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos).
         //if(view == this.getView().findViewById(R.id.TypeSpinner)) {
@@ -214,7 +213,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 condition = if (cbMelodyChecked == true) {
                     arrayOf(selectedMelody, selectedStyle)
                 } else arrayOf(selectedType, selectedStyle)
-            } else if (nbChecked == 2) {
+            } else {
                 MY_QUERY += " AND style=?"
                 condition = arrayOf(selectedType, selectedMelody, selectedStyle)
             }

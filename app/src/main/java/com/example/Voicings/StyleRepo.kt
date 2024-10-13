@@ -26,15 +26,15 @@ class StyleRepo {
 
     fun delete() {
         val db = getInstance()!!.openDatabase()
-        db!!.delete(Style.Companion.TABLE, null, null)
+        db!!.delete(Style.TABLE, null, null)
         getInstance()!!.closeDatabase()
     }
 
     companion object {
         fun createTable(): String {
-            return ("CREATE TABLE " + Style.Companion.TABLE + "("
-                    + Style.Companion.KEY_StyleId + "  INTEGER PRIMARY KEY   ,"
-                    + Style.Companion.KEY_Name + " TEXT )")
+            return ("CREATE TABLE " + Style.TABLE + "("
+                    + Style.KEY_StyleId + "  INTEGER PRIMARY KEY   ,"
+                    + Style.KEY_Name + " TEXT )")
         }
     }
 }
