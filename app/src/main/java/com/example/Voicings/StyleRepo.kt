@@ -1,43 +1,40 @@
-package com.example.Voicings;
+package com.example.Voicings
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues
+import com.example.Voicings.DatabaseManager.Companion.getInstance
 
-public class StyleRepo {
-
-    public StyleRepo() {
-
-        com.example.Voicings.Style style = new Style();
-
+class StyleRepo {
+    init {
+        val style = Style()
     }
 
 
-    public static String createTable() {
-        return "CREATE TABLE " + com.example.Voicings.Style.TABLE + "("
-                + com.example.Voicings.Style.KEY_StyleId + "  INTEGER PRIMARY KEY   ,"
-                + com.example.Voicings.Style.KEY_Name + " TEXT )";
-    }
-
-
-    public int insert(Style Style) {
-        int styleId;
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        ContentValues values = new ContentValues();
-        values.put(com.example.Voicings.Style.KEY_StyleId, Style.getStyleId());
-        values.put(com.example.Voicings.Style.KEY_Name, Style.getName());
+    fun insert(Style: Style): Int {
+        val styleId: Int
+        val db = getInstance()!!.openDatabase()
+        val values = ContentValues()
+        values.put(com.example.Voicings.Style.KEY_StyleId, Style.styleId)
+        values.put(com.example.Voicings.Style.KEY_Name, Style.name)
 
         // Inserting Row
-        styleId = (int) db.insert(com.example.Voicings.Style.TABLE, null, values);
-        DatabaseManager.getInstance().closeDatabase();
+        styleId = db!!.insert(com.example.Voicings.Style.TABLE, null, values).toInt()
+        getInstance()!!.closeDatabase()
 
-        return styleId;
+        return styleId
     }
 
 
-    public void delete() {
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        db.delete(com.example.Voicings.Style.TABLE, null, null);
-        DatabaseManager.getInstance().closeDatabase();
+    fun delete() {
+        val db = getInstance()!!.openDatabase()
+        db!!.delete(Style.Companion.TABLE, null, null)
+        getInstance()!!.closeDatabase()
     }
 
+    companion object {
+        fun createTable(): String {
+            return ("CREATE TABLE " + Style.Companion.TABLE + "("
+                    + Style.Companion.KEY_StyleId + "  INTEGER PRIMARY KEY   ,"
+                    + Style.Companion.KEY_Name + " TEXT )")
+        }
+    }
 }

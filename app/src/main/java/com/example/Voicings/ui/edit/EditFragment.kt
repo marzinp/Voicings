@@ -1,37 +1,35 @@
-package com.example.Voicings.ui.edit;
+package com.example.Voicings.ui.edit
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.Voicings.databinding.FragmentEditBinding
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+class EditFragment : Fragment() {
+    private var binding: FragmentEditBinding? = null
 
-import com.example.Voicings.databinding.FragmentEditBinding;
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        val editViewModel =
+            ViewModelProvider(this).get(EditViewModel::class.java)
 
-public class EditFragment extends Fragment {
+        binding = FragmentEditBinding.inflate(inflater, container, false)
+        val root: View = binding!!.root
 
-    private FragmentEditBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        com.example.Voicings.ui.edit.EditViewModel editViewModel =
-                new ViewModelProvider(this).get(EditViewModel.class);
-
-        binding = FragmentEditBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        final TextView textView = binding.textEdit;
-        editViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        val textView = binding!!.textEdit
+        editViewModel.text.observe(viewLifecycleOwner) { text: CharSequence? ->
+            textView.text = text
+        }
+        return root
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

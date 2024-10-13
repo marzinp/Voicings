@@ -1,30 +1,18 @@
-package com.example.Voicings;
+package com.example.Voicings
 
-public class Melody {
-    //public static final String TAG = com.example.Voicings.Melody.class.getSimpleName();
-    public static final String TABLE = "Melodys";
-    // Labels Table Columns names
-    public static final String KEY_MelodyId = "MelodyId";
-    public static final String KEY_Name = "Name";
+class Melody {
+    var melodyId: String? = null
 
-    private String MelodyId;
-    private String name;
+    @JvmField
+    var name: String? = null
 
 
-    public String getMelodyId() {
-        return MelodyId;
+    companion object {
+        //public static final String TAG = com.example.Voicings.Melody.class.getSimpleName();
+        const val TABLE: String = "Melodys"
+
+        // Labels Table Columns names
+        const val KEY_MelodyId: String = "MelodyId"
+        const val KEY_Name: String = "Name"
     }
-
-    public void setMelodyId(String melodyId) {
-        this.MelodyId = melodyId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }

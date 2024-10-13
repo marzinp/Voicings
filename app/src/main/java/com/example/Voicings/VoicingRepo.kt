@@ -1,51 +1,47 @@
-package com.example.Voicings;
+package com.example.Voicings
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues
+import com.example.Voicings.DatabaseManager.Companion.getInstance
 
-public class VoicingRepo {
-    private static Voicing voicing;
-
-    public VoicingRepo() {
-
-        voicing = new Voicing();
-
+class VoicingRepo {
+    init {
+        voicing = Voicing()
     }
 
 
-    public static String createTable() {
-        return "CREATE TABLE " + Voicing.TABLE + " ("
-                + Voicing.KEY_VoicingId + "  INT PRIMARY KEY    ,"
-                + Voicing.KEY_Type + " TEXT ,"
-                + Voicing.KEY_Melody + " TEXT ,"
-                + Voicing.KEY_Style + " TEXT )";
-
-
-    }
-
-
-    public int insert(Voicing voicing) {
-        int voicingId;
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Voicing.KEY_VoicingId, voicing.getVoicingId());
-        values.put(Voicing.KEY_Type, voicing.getType());
-        values.put(Voicing.KEY_Melody, voicing.getMelody());
-        values.put(Voicing.KEY_Style, voicing.getStyle());
+    fun insert(voicing: Voicing): Int {
+        val voicingId: Int
+        val db = getInstance()!!.openDatabase()
+        val values = ContentValues()
+        values.put(Voicing.Companion.KEY_VoicingId, voicing.voicingId)
+        values.put(Voicing.Companion.KEY_Type, voicing.type)
+        values.put(Voicing.Companion.KEY_Melody, voicing.melody)
+        values.put(Voicing.Companion.KEY_Style, voicing.style)
 
 
         // Inserting Row
-        voicingId = (int) db.insert(Voicing.TABLE, null, values);
-        DatabaseManager.getInstance().closeDatabase();
+        voicingId = db!!.insert(Voicing.Companion.TABLE, null, values).toInt()
+        getInstance()!!.closeDatabase()
 
-        return voicingId;
+        return voicingId
     }
 
 
-    public void delete() {
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        db.delete(Voicing.TABLE, null, null);
-        DatabaseManager.getInstance().closeDatabase();
+    fun delete() {
+        val db = getInstance()!!.openDatabase()
+        db!!.delete(Voicing.Companion.TABLE, null, null)
+        getInstance()!!.closeDatabase()
     }
 
+    companion object {
+        private lateinit var voicing: Voicing
+
+        fun createTable(): String {
+            return ("CREATE TABLE " + Voicing.Companion.TABLE + " ("
+                    + Voicing.Companion.KEY_VoicingId + "  INT PRIMARY KEY    ,"
+                    + Voicing.Companion.KEY_Type + " TEXT ,"
+                    + Voicing.Companion.KEY_Melody + " TEXT ,"
+                    + Voicing.Companion.KEY_Style + " TEXT )")
+        }
+    }
 }

@@ -1,48 +1,56 @@
-package com.example.Voicings;
+package com.example.Voicings
 
+import android.database.sqlite.SQLiteDatabase
 
-import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by Tan on 1/26/2016.
  */
-public class DatabaseManager {
-    private static DatabaseManager instance;
-    private static DBHelper mDatabaseHelper;
-    private Integer mOpenCounter = 0;
-    private SQLiteDatabase mDatabase;
+class DatabaseManager {
+    private var mOpenCounter = 0
+    private var mDatabase: SQLiteDatabase? = null
 
-    public static synchronized void initializeInstance(DBHelper helper) {
-        if (instance == null) {
-            instance = new DatabaseManager();
-            mDatabaseHelper = helper;
-        }
-    }
-
-    public static synchronized DatabaseManager getInstance() {
-        if (instance == null) {
-            throw new IllegalStateException(DatabaseManager.class.getSimpleName() +
-                    " is not initialized, call initializeInstance(..) method first.");
-        }
-
-        return instance;
-    }
-
-    public synchronized SQLiteDatabase openDatabase() {
-        mOpenCounter += 1;
+    @Synchronized
+    fun openDatabase(): SQLiteDatabase? {
+        mOpenCounter += 1
         if (mOpenCounter == 1) {
             // Opening new database
-            mDatabase = mDatabaseHelper.getWritableDatabase();
+            mDatabase = mDatabaseHelper!!.writableDatabase
         }
-        return mDatabase;
+        return mDatabase
     }
 
-    public synchronized void closeDatabase() {
-        mOpenCounter -= 1;
+    @Synchronized
+    fun closeDatabase() {
+        mOpenCounter -= 1
         if (mOpenCounter == 0) {
             // Closing database
-            mDatabase.close();
+            mDatabase!!.close()
+        }
+    }
 
+    companion object {
+        private var instance: DatabaseManager? = null
+        private var mDatabaseHelper: DBHelper? = null
+
+        @JvmStatic
+        @Synchronized
+        fun initializeInstance(helper: DBHelper?) {
+            if (instance == null) {
+                instance = DatabaseManager()
+                mDatabaseHelper = helper
+            }
+        }
+
+        @JvmStatic
+        @Synchronized
+        fun getInstance(): DatabaseManager? {
+            checkNotNull(instance) {
+                DatabaseManager::class.java.simpleName +
+                        " is not initialized, call initializeInstance(..) method first."
+            }
+
+            return instance
         }
     }
 }

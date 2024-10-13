@@ -1,19 +1,16 @@
-package com.example.Voicings.ui.edit;
+package com.example.Voicings.ui.edit
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-public class EditViewModel extends ViewModel {
+class EditViewModel : ViewModel() {
+    private val mText = MutableLiveData<String?>()
 
-    private final MutableLiveData<String> mText;
-
-    public EditViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is edit fragment");
+    init {
+        mText.value = "This is edit fragment"
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+    val text: LiveData<String?>
+        get() = mText
 }

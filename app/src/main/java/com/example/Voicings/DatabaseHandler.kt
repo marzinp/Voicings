@@ -1,55 +1,53 @@
-package com.example.Voicings;
+package com.example.Voicings
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import org.json.JSONException
+import org.json.JSONObject
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Voicings";
-    private static final String TABLE_VOICINGS = "Voicings";
-    private static final String KEY_VoicingId = "id";
-    private static final String KEY_VoicingType = "Type";
-    private static final String KEY_VoicingMelody = "Melody";
-    private static final String KEY_VoicingStyle = "Style";
-    private static final String KEY_VoicingLH = "LH";
-    private static final String KEY_VoicingRH = "RH";
-
-
-    private static final String KEY_DeviceType = "deviceType";
-    String CREATE_VOICING_TABLE = "CREATE TABLE " + TABLE_VOICINGS + "(" +
+class DatabaseHandler(context: Context?) :
+    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    var CREATE_VOICING_TABLE: String = ("CREATE TABLE " + TABLE_VOICINGS + "(" +
             KEY_VoicingId + " INTEGER PRIMARY KEY," + KEY_VoicingType + " TEXT," + KEY_VoicingMelody + " TEXT,"
-            + KEY_VoicingStyle + " TEXT," + KEY_VoicingLH + " TEXT," + KEY_VoicingRH + " TEXT" + ")";
+            + KEY_VoicingStyle + " TEXT," + KEY_VoicingLH + " TEXT," + KEY_VoicingRH + " TEXT" + ")")
 
-    public DatabaseHandler(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL(CREATE_VOICING_TABLE)
     }
 
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_VOICING_TABLE);
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOICINGS)
+        onCreate(db)
     }
 
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_VOICINGS);
-        onCreate(db);
+    @Throws(JSONException::class)
+    fun addJson(json: JSONObject) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(KEY_VoicingId, json.getString("voicingId"))
+        values.put(KEY_VoicingType, json.getString("voicingType"))
+        values.put(KEY_VoicingMelody, json.getString("voicingMelody"))
+        values.put(KEY_VoicingStyle, json.getString("voicingStyle"))
+        values.put(KEY_VoicingLH, json.getString("LH"))
+        values.put(KEY_VoicingRH, json.getString("RH"))
+        db.insert(TABLE_VOICINGS, null, values)
+        db.close()
     }
 
-    void addJson(JSONObject json) throws JSONException {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_VoicingId, json.getString("voicingId"));
-        values.put(KEY_VoicingType, json.getString("voicingType"));
-        values.put(KEY_VoicingMelody, json.getString("voicingMelody"));
-        values.put(KEY_VoicingStyle, json.getString("voicingStyle"));
-        values.put(KEY_VoicingLH, json.getString("voicingLH"));
-        values.put(KEY_VoicingRH, json.getString("voicingRH"));
-        db.insert(TABLE_VOICINGS, null, values);
-        db.close();
-    }
+    companion object {
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "Voicings"
+        private const val TABLE_VOICINGS = "Voicings"
+        private const val KEY_VoicingId = "id"
+        private const val KEY_VoicingType = "Type"
+        private const val KEY_VoicingMelody = "Melody"
+        private const val KEY_VoicingStyle = "Style"
+        private const val KEY_VoicingLH = "LH"
+        private const val KEY_VoicingRH = "RH"
 
+
+        private const val KEY_DeviceType = "deviceType"
+    }
 }

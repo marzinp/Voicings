@@ -1,20 +1,16 @@
-package com.example.Voicings.ui.choix;
+package com.example.Voicings.ui.choix
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-public class ChoixViewModel extends ViewModel {
+class ChoixViewModel : ViewModel() {
+    private val mText = MutableLiveData<String>()
 
-    private final MutableLiveData<String> mText;
-
-    public ChoixViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is tables fragment");
-
+    init {
+        mText.value = "This is tables fragment"
     }
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+    val text: LiveData<String>
+        get() = mText
 }

@@ -1,44 +1,42 @@
-package com.example.Voicings;
+package com.example.Voicings
 
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues
+import com.example.Voicings.DatabaseManager.Companion.getInstance
 
-public class MelodyRepo {
-    private static Melody melody;
-
-    public MelodyRepo() {
-
-        melody = new Melody();
-
+class MelodyRepo {
+    init {
+        melody = Melody()
     }
 
 
-    public static String createTable() {
-        return "CREATE TABLE " + Melody.TABLE + "("
-                + Melody.KEY_MelodyId + "  INTEGER PRIMARY KEY    ,"
-                + Melody.KEY_Name + " TEXT )";
-    }
-
-
-    public int insert(Melody melody) {
-        int melodyId;
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        ContentValues values = new ContentValues();
-        values.put(Melody.KEY_MelodyId, melody.getMelodyId());
-        values.put(Melody.KEY_Name, melody.getName());
+    fun insert(melody: Melody): Int {
+        val melodyId: Int
+        val db = getInstance()!!.openDatabase()
+        val values = ContentValues()
+        values.put(Melody.KEY_MelodyId, melody.melodyId)
+        values.put(Melody.KEY_Name, melody.name)
 
         // Inserting Row
-        melodyId = (int) db.insert(Melody.TABLE, null, values);
-        DatabaseManager.getInstance().closeDatabase();
+        melodyId = db!!.insert(Melody.TABLE, null, values).toInt()
+        getInstance()!!.closeDatabase()
 
-        return melodyId;
+        return melodyId
     }
 
 
-    public void delete() {
-        SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        db.delete(Melody.TABLE, null, null);
-        DatabaseManager.getInstance().closeDatabase();
+    fun delete() {
+        val db = getInstance()!!.openDatabase()
+        db!!.delete(Melody.TABLE, null, null)
+        getInstance()!!.closeDatabase()
     }
 
+    companion object {
+        private lateinit var melody: Melody
+
+        fun createTable(): String {
+            return ("CREATE TABLE " + Melody.TABLE + "("
+                    + Melody.KEY_MelodyId + "  INTEGER PRIMARY KEY    ,"
+                    + Melody.KEY_Name + " TEXT )")
+        }
+    }
 }

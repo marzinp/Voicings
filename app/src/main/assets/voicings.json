@@ -2,10 +2,10 @@
   "Voicings": {
     "voicing": [
       {
-        "id": "1",
-        "Type": "Maj7",
-        "Melody": 9,
-        "Style": "Opened",
+        "voicingId": "1",
+        "voicingType": "Maj7",
+        "voicingMelody": 9,
+        "voicingStyle": "Opened",
         "LH": [
           1,
           5
@@ -19,10 +19,10 @@
     ],
     "voicing ": [
       {
-        "id": "2",
-        "Type": "Maj7",
-        "Melody": "M7",
-        "Style": "Closed",
+        "voicingId": "2",
+        "voicingType": "Maj7",
+        "voicingMelody": "M7",
+        "voicingStyle": "Closed",
         "LH": [
           1,
           3,
@@ -36,20 +36,20 @@
   "Types": {
     "Type": [
       {
-        "id": 0,
-        "Name": "Maj7"
+        "typeId": 0,
+        "typeName": "Maj7"
       },
       {
-        "id": 1,
-        "Name": "Min7"
+        "typeId": 1,
+        "typeName": "Min7"
       },
       {
-        "id": 2,
-        "Name": "Dom7"
+        "typeId": 2,
+        "typeName": "Dom7"
       },
       {
-        "id": 1,
-        "Name": "Min7b5"
+        "typeId": 1,
+        "typeName": "Min7b5"
       }
     ]
   }
