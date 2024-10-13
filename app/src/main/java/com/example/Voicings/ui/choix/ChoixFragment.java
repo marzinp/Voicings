@@ -118,6 +118,7 @@ public class ChoixFragment extends Fragment implements AdapterView.OnItemSelecte
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         selectedStyle = spinner.getSelectedItem().toString();
+        c.close();
     }
 
     @Override
@@ -158,7 +159,6 @@ public class ChoixFragment extends Fragment implements AdapterView.OnItemSelecte
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        int i = 2;
     }
 
     public void displayResults() {

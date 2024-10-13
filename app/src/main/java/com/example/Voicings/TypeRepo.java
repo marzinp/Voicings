@@ -19,7 +19,7 @@ public class TypeRepo {
 
     public static String createTable() {
         return "CREATE TABLE " + Type.TABLE + "("
-                + Type.KEY_TypeId + "  INTEGER PRIMARY KEY   ,"
+                + Type.KEY_TypeId + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL   ,"
                 + Type.KEY_Name + " TEXT )";
     }
 
