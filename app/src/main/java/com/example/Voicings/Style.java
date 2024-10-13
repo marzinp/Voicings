@@ -1,8 +1,8 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 public class Style {
 
-    public static final String TAG = com.example.myapplication.Type.class.getSimpleName();
+    //public static final String TAG = com.example.Voicings.Type.class.getSimpleName();
     public static final String TABLE = "Styles";
     // Labels Table Columns names
     public static final String KEY_StyleId = "StyleId";

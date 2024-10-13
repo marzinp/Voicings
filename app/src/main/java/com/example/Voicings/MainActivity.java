@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.myapplication.databinding.ActivityMainBinding;
+import com.example.Voicings.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 

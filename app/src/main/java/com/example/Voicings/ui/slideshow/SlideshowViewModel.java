@@ -1,16 +1,16 @@
-package com.example.myapplication.ui.edit;
+package com.example.Voicings.ui.slideshow;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class EditViewModel extends ViewModel {
+public class SlideshowViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public EditViewModel() {
+    public SlideshowViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is edit fragment");
+        mText.setValue("This is slideshow fragment");
     }
 
     public LiveData<String> getText() {

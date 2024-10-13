@@ -1,7 +1,7 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 public class Voicing {
-    public static final String TAG = com.example.myapplication.Type.class.getSimpleName();
+    //public static final String TAG = com.example.Voicings.Type.class.getSimpleName();
     public static final String TABLE = "Voicings";
     // Labels Table Columns names
     public static final String KEY_VoicingId = "VoicingId";
@@ -44,7 +44,7 @@ public class Voicing {
     }
 
     public void setStyle(String style) {
-        this.Style = Style;
+        this.Style = style;
     }
 
 }

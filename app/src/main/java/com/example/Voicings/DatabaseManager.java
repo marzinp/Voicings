@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 
 import android.database.sqlite.SQLiteDatabase;

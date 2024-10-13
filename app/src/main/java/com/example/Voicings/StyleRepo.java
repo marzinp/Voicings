@@ -1,22 +1,21 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 
 public class StyleRepo {
-    private static Style Style;
 
     public StyleRepo() {
 
-        Style = new Style();
+        com.example.Voicings.Style style = new Style();
 
     }
 
 
     public static String createTable() {
-        return "CREATE TABLE " + com.example.myapplication.Style.TABLE + "("
-                + com.example.myapplication.Style.KEY_StyleId + "   PRIMARY KEY    ,"
-                + com.example.myapplication.Style.KEY_Name + " TEXT )";
+        return "CREATE TABLE " + com.example.Voicings.Style.TABLE + "("
+                + com.example.Voicings.Style.KEY_StyleId + "  INTEGER PRIMARY KEY   ,"
+                + com.example.Voicings.Style.KEY_Name + " TEXT )";
     }
 
 
@@ -24,11 +23,11 @@ public class StyleRepo {
         int styleId;
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         ContentValues values = new ContentValues();
-        values.put(com.example.myapplication.Style.KEY_StyleId, Style.getStyleId());
-        values.put(com.example.myapplication.Style.KEY_Name, Style.getName());
+        values.put(com.example.Voicings.Style.KEY_StyleId, Style.getStyleId());
+        values.put(com.example.Voicings.Style.KEY_Name, Style.getName());
 
         // Inserting Row
-        styleId = (int) db.insert(com.example.myapplication.Style.TABLE, null, values);
+        styleId = (int) db.insert(com.example.Voicings.Style.TABLE, null, values);
         DatabaseManager.getInstance().closeDatabase();
 
         return styleId;
@@ -37,7 +36,7 @@ public class StyleRepo {
 
     public void delete() {
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
-        db.delete(com.example.myapplication.Style.TABLE, null, null);
+        db.delete(com.example.Voicings.Style.TABLE, null, null);
         DatabaseManager.getInstance().closeDatabase();
     }
 

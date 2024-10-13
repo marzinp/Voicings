@@ -1,7 +1,7 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 public class Melody {
-    public static final String TAG = com.example.myapplication.Melody.class.getSimpleName();
+    //public static final String TAG = com.example.Voicings.Melody.class.getSimpleName();
     public static final String TABLE = "Melodys";
     // Labels Table Columns names
     public static final String KEY_MelodyId = "MelodyId";

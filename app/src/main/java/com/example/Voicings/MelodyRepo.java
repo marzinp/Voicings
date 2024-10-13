@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,7 +15,7 @@ public class MelodyRepo {
 
     public static String createTable() {
         return "CREATE TABLE " + Melody.TABLE + "("
-                + Melody.KEY_MelodyId + "   PRIMARY KEY    ,"
+                + Melody.KEY_MelodyId + "  INTEGER PRIMARY KEY    ,"
                 + Melody.KEY_Name + " TEXT )";
     }
 

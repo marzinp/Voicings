@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 import static org.junit.Assert.assertEquals;
 

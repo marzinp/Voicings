@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,7 +19,7 @@ public class TypeRepo {
 
     public static String createTable() {
         return "CREATE TABLE " + Type.TABLE + "("
-                + Type.KEY_TypeId + "   PRIMARY KEY    ,"
+                + Type.KEY_TypeId + "  INTEGER PRIMARY KEY   ,"
                 + Type.KEY_Name + " TEXT )";
     }
 

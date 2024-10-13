@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.edit;
+package com.example.Voicings.ui.slideshow;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.myapplication.databinding.FragmentEditBinding;
+import com.example.Voicings.databinding.FragmentSlideshowBinding;
 
-public class EditFragment extends Fragment {
+public class SlideshowFragment extends Fragment {
 
-    private FragmentEditBinding binding;
+    private FragmentSlideshowBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        com.example.myapplication.ui.edit.EditViewModel editViewModel =
-                new ViewModelProvider(this).get(EditViewModel.class);
+        SlideshowViewModel slideshowViewModel =
+                new ViewModelProvider(this).get(SlideshowViewModel.class);
 
-        binding = FragmentEditBinding.inflate(inflater, container, false);
+        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textEdit;
-        editViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSlideshow;
+        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

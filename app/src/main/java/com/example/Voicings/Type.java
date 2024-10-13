@@ -1,8 +1,8 @@
-package com.example.myapplication;
+package com.example.Voicings;
 
 public class Type {
 
-    public static final String TAG = Type.class.getSimpleName();
+    //public static final String TAG = Type.class.getSimpleName();
     public static final String TABLE = "Types";
     // Labels Table Columns names
     public static final String KEY_TypeId = "TypeId";

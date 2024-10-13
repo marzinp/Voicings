@@ -1,17 +1,16 @@
-package com.example.myapplication.ui.choix;
+package com.example.Voicings.ui.edit;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ChoixViewModel extends ViewModel {
+public class EditViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public ChoixViewModel() {
+    public EditViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is tables fragment");
-
+        mText.setValue("This is edit fragment");
     }
 
     public LiveData<String> getText() {
