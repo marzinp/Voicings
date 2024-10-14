@@ -56,9 +56,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         cbMelodyChecked = cbMelody?.isChecked
         cbStyle = binding?.checkStyle
         cbStyleChecked = cbMelody?.isChecked
-//       choixViewModel.text.observe(viewLifecycleOwner) { text: CharSequence? ->
-//           textView?.text = text
-//       }
+
         return root
 
     }
@@ -193,38 +191,13 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         val dbHelper = DBHelper(context)
         val newDB = dbHelper.readableDatabase
         var nbChecked = 0
-        var MY_QUERY = "SELECT * FROM Voicings"
-        var condition: Array<String?>? = null
-        if (cbTypeChecked == true) {
-            MY_QUERY += " WHERE type=?"
-            condition = arrayOf(selectedType)
-            nbChecked++
-        }
-        if (cbMelodyChecked == true) {
-            if (nbChecked == 0) {
-                MY_QUERY += " WHERE melody=?"
-                condition = arrayOf(selectedMelody)
-            } else {
-                MY_QUERY += " AND melody=?"
-                condition = arrayOf(selectedType, selectedMelody)
-            }
-            nbChecked++
-        }
-        if (cbStyleChecked == true) {
-            if (nbChecked == 0) {
-                MY_QUERY += " WHERE style=?"
-                condition = arrayOf(selectedStyle)
-            } else if (nbChecked == 1) {
-                MY_QUERY += " AND style=?"
-                condition = if (cbMelodyChecked == true) {
-                    arrayOf(selectedMelody, selectedStyle)
-                } else arrayOf(selectedType, selectedStyle)
-            } else {
-                MY_QUERY += " AND style=?"
-                condition = arrayOf(selectedType, selectedMelody, selectedStyle)
-            }
-        }
-        var c: Cursor? = newDB.rawQuery(MY_QUERY, condition)
+        var crits = arrayOf(
+            if (cbTypeChecked!!) selectedType!! else "%",
+            if (cbMelodyChecked!!) selectedMelody!! else "%",
+            if (cbStyleChecked!!) selectedStyle!! else "%"
+        )
+        var MY_QUERY = "SELECT * FROM Voicings WHERE type LIKE? AND melody LIKE? AND style LIKE?"
+        var c: Cursor? = newDB.rawQuery(MY_QUERY, crits)
 
         //Now iterate with cursor
         if (c != null) {

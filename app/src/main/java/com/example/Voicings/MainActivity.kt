@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val context = this.applicationContext
         val dbHelper = DBHelper(context)
-        val db = dbHelper.writableDatabase
         initializeInstance(dbHelper)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
