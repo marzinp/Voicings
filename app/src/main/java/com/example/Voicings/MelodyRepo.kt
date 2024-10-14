@@ -22,7 +22,37 @@ class MelodyRepo {
 
         return melodyId
     }
-
+    fun populate() {
+        val melody = Melody()
+        var i = 0
+        var list = ArrayList(
+            listOf(
+                "1",
+                "2",
+                "b3",
+                "3",
+                "4",
+                "b5",
+                "5",
+                "#5",
+                "6",
+                "7",
+                "M7",
+                "b9",
+                "9",
+                "11",
+                "#11",
+                "b13",
+                "13"
+            )
+        )
+        while (i < list.size) {
+            melody.name = list[i]
+            melody.melodyId = i.toString()
+            i++
+            insert(melody)
+        }
+    }
 
     fun delete() {
         val db = getInstance()!!.openDatabase()

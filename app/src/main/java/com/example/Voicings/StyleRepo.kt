@@ -22,7 +22,28 @@ class StyleRepo {
 
         return styleId
     }
+    fun populate() {
+        val style = Style()
+        var i = 0
+        val list = ArrayList(
+            listOf(
+                "Closed",
+                "Opened",
+                "Spread",
+                "Rootless",
+                "Quartal",
+                "SoWhat",
+                "UpperStructure"
+            )
+        )
+        while (i < list.size) {
+            style.name = list[i]
+            style.styleId = i.toString()
+            i++
+            insert(style)
+        }
 
+    }
 
     fun delete() {
         val db = getInstance()!!.openDatabase()

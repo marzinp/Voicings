@@ -15,16 +15,15 @@ import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private var mAppBarConfiguration: AppBarConfiguration? = null
-    private var binding: ActivityMainBinding? = null
+    var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val context = this.applicationContext
         val dbHelper = DBHelper(context)
         initializeInstance(dbHelper)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
         setSupportActionBar(binding!!.appBarMain.toolbar)
         binding!!.appBarMain.fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -51,89 +50,10 @@ class MainActivity : AppCompatActivity() {
         val melodyRepo = MelodyRepo()
         val styleRepo = StyleRepo()
         val voicingRepo = VoicingRepo()
-        typeRepo.delete()
-        melodyRepo.delete()
-        styleRepo.delete()
-        voicingRepo.delete()
-
-        //Insert Sample data if the table is empty
-        val type = Type()
-        var i = 0
-        var list: List<String> = ArrayList(listOf("Maj7", "Min7", "Dom7", "Min7b5", "Dim7", "Alt"))
-        while (i < list.size) {
-            type.name = list[i]
-            type.typeId = i.toString()
-            i++
-            typeRepo.insert(type)
-        }
-        val style = Style()
-        i = 0
-        list = ArrayList(
-            listOf(
-                "Closed",
-                "Opened",
-                "Spread",
-                "Rootless",
-                "Quartal",
-                "SoWhat",
-                "UpperStructure"
-            )
-        )
-        while (i < list.size) {
-            style.name = list[i]
-            style.styleId = i.toString()
-            i++
-            styleRepo.insert(style)
-        }
-        val melody = Melody()
-        i = 0
-        list = ArrayList(
-            listOf(
-                "1",
-                "2",
-                "b3",
-                "3",
-                "4",
-                "b5",
-                "5",
-                "#5",
-                "6",
-                "7",
-                "M7",
-                "b9",
-                "9",
-                "11",
-                "#11",
-                "b13",
-                "13"
-            )
-        )
-        while (i < list.size) {
-            melody.name = list[i]
-            melody.melodyId = i.toString()
-            i++
-            melodyRepo.insert(melody)
-        }
-
-        val voicing = Voicing()
-        i = 0
-        val listoflists = listOf<List<String>>(
-            mutableListOf("Maj7", "M7", "Closed", "1", "3 5 M7"),
-            mutableListOf("Min7", "11", "Spread", "", ""),
-            mutableListOf("Dom7", "5", "Spread", "", ""),
-            mutableListOf("Min7", "9", "Rootless", "", ""),
-            mutableListOf("Min7b5", "7", "Opened", "", "")
-        )
-        while (i < listoflists.size) {
-            voicing.voicingId = i
-            voicing.type = listoflists[i][0]
-            voicing.melody = listoflists[i][1]
-            voicing.style = listoflists[i][2]
-            voicing.LH = listoflists[i][3]
-            voicing.RH = listoflists[i][4]
-            i++
-            voicingRepo.insert(voicing)
-        }
+        typeRepo.populate()
+        melodyRepo.populate()
+        styleRepo.populate()
+        voicingRepo.populate()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

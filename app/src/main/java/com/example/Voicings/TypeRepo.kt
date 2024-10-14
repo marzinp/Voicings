@@ -26,6 +26,20 @@ class TypeRepo {
         return typeId
     }
 
+    fun populate() {
+        val db = getInstance()!!.openDatabase()
+        delete()
+        //Insert Sample data if the table is empty
+        val type = Type()
+        var i = 0
+        var list: List<String> = ArrayList(listOf("Maj7", "Min7", "Dom7", "Min7b5", "Dim7", "Alt"))
+        while (i < list.size) {
+            type.name = list[i]
+            type.typeId = i.toString()
+            i++
+            insert(type)
+        }
+    }
 
     fun delete() {
         val db = getInstance()!!.openDatabase()

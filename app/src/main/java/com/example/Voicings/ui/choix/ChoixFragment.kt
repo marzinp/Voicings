@@ -47,6 +47,17 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         binding = FragmentChoixBinding.inflate(inflater, container, false)
         val root: View = binding!!.root
         //val textView = binding?.displayChordsList
+
+
+        return root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var results = ArrayList<String?>()
+        val dbHelper = DBHelper(this.context)
+        val newDB = dbHelper.writableDatabase
         typeSpinner = binding?.TypeSpinner
         melodySpinner = binding?.MelodySpinner
         styleSpinner = binding?.StyleSpinner
@@ -56,18 +67,6 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         cbMelodyChecked = cbMelody?.isChecked
         cbStyle = binding?.checkStyle
         cbStyleChecked = cbMelody?.isChecked
-
-        return root
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        var spinner = typeSpinner
-        var results = ArrayList<String?>()
-        val dbHelper = DBHelper(this.context)
-        val newDB = dbHelper.writableDatabase
-
         cbType?.setOnCheckedChangeListener(this)
         cbMelody?.setOnCheckedChangeListener(this)
         cbStyle?.setOnCheckedChangeListener(this)
@@ -90,6 +89,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         // Specify the layout to use when the list of choices appears.
         var adapter: ArrayAdapter<*> =
             ArrayAdapter(this.requireContext(), R.layout.spinner_center_item, results)
+        var spinner = typeSpinner
         // Apply the adapter to the spinner.
         spinner?.adapter = adapter
         spinner?.onItemSelectedListener = this
