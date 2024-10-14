@@ -1,6 +1,5 @@
 package com.example.Voicings
 
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,6 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.Voicings.DatabaseManager.Companion.initializeInstance
 import com.example.Voicings.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
-import java.util.Arrays
 
 class MainActivity : AppCompatActivity() {
     private var mAppBarConfiguration: AppBarConfiguration? = null
@@ -23,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val context = this.applicationContext
         val dbHelper = DBHelper(context)
-        db = dbHelper.writableDatabase
+        val db = dbHelper.writableDatabase
         initializeInstance(dbHelper)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
@@ -120,18 +118,20 @@ class MainActivity : AppCompatActivity() {
 
         val voicing = Voicing()
         i = 0
-        val listoflists = Arrays.asList<List<String>>(
-            mutableListOf("Maj7", "M7", "Closed", "1"),
-            mutableListOf("Min7", "11", "Spread", "2"),
-            mutableListOf("Dom7", "5", "Spread", "3"),
-            mutableListOf("Min7", "9", "Rootless", "4"),
-            mutableListOf("Min7b5", "7", "Opened", "5")
+        val listoflists = listOf<List<String>>(
+            mutableListOf("Maj7", "M7", "Closed", "1", "3 5 M7"),
+            mutableListOf("Min7", "11", "Spread", "", ""),
+            mutableListOf("Dom7", "5", "Spread", "", ""),
+            mutableListOf("Min7", "9", "Rootless", "", ""),
+            mutableListOf("Min7b5", "7", "Opened", "", "")
         )
         while (i < listoflists.size) {
+            voicing.voicingId = i
             voicing.type = listoflists[i][0]
             voicing.melody = listoflists[i][1]
             voicing.style = listoflists[i][2]
-            voicing.voicingId = i.toString()
+            voicing.LH = listoflists[i][3]
+            voicing.RH = listoflists[i][4]
             i++
             voicingRepo.insert(voicing)
         }
@@ -149,8 +149,4 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp())
     }
 
-    companion object {
-        private val dbHelper: DBHelper? = null
-        private var db: SQLiteDatabase? = null
-    }
 }

@@ -13,17 +13,21 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.Voicings.DBHelper
 import com.example.Voicings.R
+import com.example.Voicings.TableRowAdapter
+import com.example.Voicings.Voicing
 import com.example.Voicings.databinding.FragmentChoixBinding
 
 
 class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
     CompoundButton.OnCheckedChangeListener {
     private var binding: FragmentChoixBinding? = null
-    var selectedType: String? = null
-    var selectedMelody: String? = null
-    var selectedStyle: String? = null
+    private var selectedType: String? = null
+    private var selectedMelody: String? = null
+    private var selectedStyle: String? = null
     private var cbType: CheckBox? = null
     private var cbMelody: CheckBox? = null
     private var cbStyle: CheckBox? = null
@@ -38,11 +42,11 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         val choixViewModel =
-            ViewModelProvider(this).get(ChoixViewModel::class.java)
+            ViewModelProvider(this)[ChoixViewModel::class.java]
 
         binding = FragmentChoixBinding.inflate(inflater, container, false)
         val root: View = binding!!.root
-        val textView = binding?.displayChordsList
+        //val textView = binding?.displayChordsList
         typeSpinner = binding?.TypeSpinner
         melodySpinner = binding?.MelodySpinner
         styleSpinner = binding?.StyleSpinner
@@ -52,9 +56,9 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         cbMelodyChecked = cbMelody?.isChecked
         cbStyle = binding?.checkStyle
         cbStyleChecked = cbMelody?.isChecked
-        choixViewModel.text.observe(viewLifecycleOwner) { text: CharSequence? ->
-            textView?.text = text
-        }
+//       choixViewModel.text.observe(viewLifecycleOwner) { text: CharSequence? ->
+//           textView?.text = text
+//       }
         return root
 
     }
@@ -82,7 +86,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 } while (c.moveToNext())
             }
         }
-        c.close()
+        c?.close()
         var text = view.findViewById<TextView>(R.id.typeSpinnerLabel)
         text.text = "Chord Types"
         // Specify the layout to use when the list of choices appears.
@@ -107,7 +111,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 } while (c.moveToNext())
             }
         }
-        c.close()
+        c?.close()
         // Specify the layout to use when the list of choices appears.
         adapter = ArrayAdapter(this.requireContext(), R.layout.spinner_center_item, results)
         text = binding?.melodySpinnerLabel
@@ -141,7 +145,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         spinner?.adapter = adapter
         spinner?.onItemSelectedListener = this
         selectedStyle = spinner?.selectedItem.toString()
-        c.close()
+        c?.close()
     }
 
     override fun onDestroyView() {
@@ -163,9 +167,13 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
     ) {
         // An item is selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos).
-        //if(view == this.getView().findViewById(R.id.TypeSpinner)) {
+        when (parent?.id) {
+            R.id.TypeSpinner -> selectedType = parent.getItemAtPosition(pos).toString()
+            R.id.MelodySpinner -> selectedMelody = parent.getItemAtPosition(pos).toString()
+            R.id.StyleSpinner -> selectedStyle = parent.getItemAtPosition(pos).toString()
+        }
         var spinner = typeSpinner
-        selectedType = spinner?.selectedItem.toString()
+
         //}
         // else if(view==this.getView().findViewById(R.id.MelodySpinner)) {
         spinner = melodySpinner
@@ -174,22 +182,18 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         //else if(view==this.getView().findViewById(R.id.StyleSpinner)) {
         spinner = styleSpinner
         selectedStyle = spinner?.selectedItem.toString()
-        // }
         this.displayResults()
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
     }
 
-    fun displayResults() {
-        val textView = binding?.displayChordsList
-        val results = ArrayList<String>()
+    private fun displayResults() {
+        val results = ArrayList<Voicing>()
         val dbHelper = DBHelper(context)
         val newDB = dbHelper.readableDatabase
         var nbChecked = 0
-        var c: Cursor?
         var MY_QUERY = "SELECT * FROM Voicings"
-        c = newDB.rawQuery(MY_QUERY, null)
         var condition: Array<String?>? = null
         if (cbTypeChecked == true) {
             MY_QUERY += " WHERE type=?"
@@ -208,7 +212,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         }
         if (cbStyleChecked == true) {
             if (nbChecked == 0) {
-                MY_QUERY += " WHERE Style=?"
+                MY_QUERY += " WHERE style=?"
                 condition = arrayOf(selectedStyle)
             } else if (nbChecked == 1) {
                 MY_QUERY += " AND style=?"
@@ -219,22 +223,28 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 MY_QUERY += " AND style=?"
                 condition = arrayOf(selectedType, selectedMelody, selectedStyle)
             }
-            nbChecked++
         }
-        if (nbChecked > 0) c = newDB.rawQuery(MY_QUERY, condition)
+        var c: Cursor? = newDB.rawQuery(MY_QUERY, condition)
+
         //Now iterate with cursor
         if (c != null) {
             if (c.moveToFirst()) {
                 do {
-                    results.add(
-                        c.getString(c.getColumnIndexOrThrow("Type"))
-                                + " " + c.getString(c.getColumnIndexOrThrow("Melody"))
-                                + " " + c.getString(c.getColumnIndexOrThrow("Style"))
-                    )
+                    var voicing = Voicing()
+                    voicing.voicingId = c.position
+                    voicing.type = c.getString(c.getColumnIndexOrThrow("Type"))
+                    voicing.melody = c.getString(c.getColumnIndexOrThrow("Melody"))
+                    voicing.style = c.getString(c.getColumnIndexOrThrow("Style"))
+                    voicing.LH = c.getString(c.getColumnIndexOrThrow("LH"))
+                    voicing.RH = c.getString(c.getColumnIndexOrThrow("RH"))
+                    results.add(voicing)
                 } while (c.moveToNext())
             }
         }
-        c.close()
-        textView?.text = results.toString()
+        c?.close()
+        val tableRecyclerView: RecyclerView? = binding?.tableRecyclerView
+        var tableRowAdapter: TableRowAdapter = TableRowAdapter(results)
+        tableRecyclerView?.layoutManager = LinearLayoutManager(this.context)
+        tableRecyclerView?.adapter = tableRowAdapter
     }
 }

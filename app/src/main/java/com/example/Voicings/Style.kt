@@ -1,8 +1,8 @@
 package com.example.Voicings
 
 class Style {
-    var styleId: String? = null
-    var name: String? = null
+    var styleId: String = ""
+    var name: String = ""
 
 
     companion object {

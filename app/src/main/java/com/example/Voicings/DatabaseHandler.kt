@@ -9,7 +9,7 @@ import org.json.JSONObject
 
 class DatabaseHandler(context: Context?) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-    var CREATE_VOICING_TABLE: String = ("CREATE TABLE " + TABLE_VOICINGS + "(" +
+    private var CREATE_VOICING_TABLE: String = ("CREATE TABLE " + TABLE_VOICINGS + "(" +
             KEY_VoicingId + " INTEGER PRIMARY KEY," + KEY_VoicingType + " TEXT," + KEY_VoicingMelody + " TEXT,"
             + KEY_VoicingStyle + " TEXT," + KEY_VoicingLH + " TEXT," + KEY_VoicingRH + " TEXT" + ")")
 

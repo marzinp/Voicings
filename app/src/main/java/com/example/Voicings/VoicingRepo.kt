@@ -17,6 +17,8 @@ class VoicingRepo {
         values.put(Voicing.KEY_Type, voicing.type)
         values.put(Voicing.KEY_Melody, voicing.melody)
         values.put(Voicing.KEY_Style, voicing.style)
+        values.put(Voicing.KEY_LH, voicing.LH)
+        values.put(Voicing.KEY_RH, voicing.RH)
 
 
         // Inserting Row
@@ -41,7 +43,9 @@ class VoicingRepo {
                     + Voicing.KEY_VoicingId + "  INT PRIMARY KEY    ,"
                     + Voicing.KEY_Type + " TEXT ,"
                     + Voicing.KEY_Melody + " TEXT ,"
-                    + Voicing.KEY_Style + " TEXT )")
+                    + Voicing.KEY_Style + " TEXT ,"
+                    + Voicing.KEY_LH + " TEXT ,"
+                    + Voicing.KEY_RH + " TEXT )")
         }
     }
 }

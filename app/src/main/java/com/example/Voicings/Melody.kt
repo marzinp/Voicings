@@ -1,10 +1,8 @@
 package com.example.Voicings
 
 class Melody {
-    var melodyId: String? = null
-
-    @JvmField
-    var name: String? = null
+    var melodyId: String = ""
+    var name: String = ""
 
 
     companion object {

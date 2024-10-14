@@ -12,5 +12,9 @@
     <string name="select_by_style">select by chord style</string>
     <string name="menu_choix">Choix du voicing</string>
     <string name="menu_edit">Modifier les tables</string>
-    <string name="menu_slideshow">Clavier</string>
+    <string name="headType">Type</string>
+    <string name="headMelody">Melody</string>
+    <string name="headStyle">Style</string>
+    <string name="headLH">Left Hand</string>
+    <string name="headRH">Right Hand</string>
 </resources>
