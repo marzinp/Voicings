@@ -25,7 +25,7 @@ class MelodyRepo {
     fun populate() {
         val melody = Melody()
         var i = 0
-        var list = ArrayList(
+        val list = ArrayList(
             listOf(
                 "1",
                 "2",
