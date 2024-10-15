@@ -24,6 +24,7 @@ class StyleRepo {
     }
     fun populate() {
         val style = Style()
+        delete()
         var i = 0
         val list = ArrayList(
             listOf(

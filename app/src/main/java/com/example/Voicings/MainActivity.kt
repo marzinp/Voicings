@@ -13,13 +13,16 @@ import com.example.Voicings.DatabaseManager.Companion.initializeInstance
 import com.example.Voicings.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
+
 class MainActivity : AppCompatActivity() {
     private var mAppBarConfiguration: AppBarConfiguration? = null
     var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         val context = this.applicationContext
         val dbHelper = DBHelper(context)
         initializeInstance(dbHelper)

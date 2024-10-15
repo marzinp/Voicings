@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.CheckBox
-import android.widget.CompoundButton
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -22,21 +20,14 @@ import com.example.Voicings.Voicing
 import com.example.Voicings.databinding.FragmentChoixBinding
 
 
-class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
-    CompoundButton.OnCheckedChangeListener {
+class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var binding: FragmentChoixBinding? = null
     private var selectedType: String? = null
     private var selectedMelody: String? = null
     private var selectedStyle: String? = null
-    private var cbType: CheckBox? = null
-    private var cbMelody: CheckBox? = null
-    private var cbStyle: CheckBox? = null
     private var typeSpinner: Spinner? = null
     private var melodySpinner: Spinner? = null
     private var styleSpinner: Spinner? = null
-    private var cbTypeChecked: Boolean? = null
-    private var cbMelodyChecked: Boolean? = null
-    private var cbStyleChecked: Boolean? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
@@ -61,15 +52,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         typeSpinner = binding?.TypeSpinner
         melodySpinner = binding?.MelodySpinner
         styleSpinner = binding?.StyleSpinner
-        cbType = binding?.checkType
-        cbTypeChecked = cbType?.isChecked
-        cbMelody = binding?.checkMelody
-        cbMelodyChecked = cbMelody?.isChecked
-        cbStyle = binding?.checkStyle
-        cbStyleChecked = cbMelody?.isChecked
-        cbType?.setOnCheckedChangeListener(this)
-        cbMelody?.setOnCheckedChangeListener(this)
-        cbStyle?.setOnCheckedChangeListener(this)
+        results.add("All")
         //Type Spinner
         var YOUR_QUERY = "SELECT * FROM Types"
         var c = newDB.rawQuery(
@@ -96,6 +79,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         selectedType = spinner?.selectedItem.toString()
         //Melody Spinner
         results = ArrayList()
+        results.add("All")
         spinner = melodySpinner
         YOUR_QUERY = "SELECT * FROM Melodys"
         c = newDB.rawQuery(
@@ -121,6 +105,7 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         //Style Spinner
         results = ArrayList()
         spinner = styleSpinner
+        results.add("All")
         //selectedStyle = spinner.getSelectedItem().toString();
         YOUR_QUERY = "SELECT * FROM Styles"
         c = newDB.rawQuery(
@@ -149,13 +134,6 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
-    }
-
-    override fun onCheckedChanged(chk: CompoundButton, b: Boolean) {
-        cbTypeChecked = cbType!!.isChecked
-        cbMelodyChecked = cbMelody!!.isChecked
-        cbStyleChecked = cbStyle!!.isChecked
-        this.displayResults()
     }
 
 
@@ -191,11 +169,10 @@ class ChoixFragment : Fragment(), AdapterView.OnItemSelectedListener,
         val dbHelper = DBHelper(context)
         val newDB = dbHelper.readableDatabase
         var nbChecked = 0
-        var crits = arrayOf(
-            if (cbTypeChecked!!) selectedType!! else "%",
-            if (cbMelodyChecked!!) selectedMelody!! else "%",
-            if (cbStyleChecked!!) selectedStyle!! else "%"
-        )
+        if (selectedType == "All") selectedType = "%"
+        if (selectedMelody == "All") selectedMelody = "%"
+        if (selectedStyle == "All") selectedStyle = "%"
+        var crits = arrayOf(selectedType, selectedMelody, selectedStyle)
         var MY_QUERY = "SELECT * FROM Voicings WHERE type LIKE? AND melody LIKE? AND style LIKE?"
         var c: Cursor? = newDB.rawQuery(MY_QUERY, crits)
 

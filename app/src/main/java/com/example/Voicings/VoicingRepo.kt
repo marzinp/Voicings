@@ -30,6 +30,7 @@ class VoicingRepo {
 
     fun populate() {
         val voicing = Voicing()
+        delete()
         var i = 0
         val listoflists = listOf<List<String>>(
             mutableListOf("Maj7", "M7", "Closed", "1", "3 5 M7"),
@@ -47,6 +48,11 @@ class VoicingRepo {
             mutableListOf("Min7", "5", "Closed", "", ""),
             mutableListOf("Maj7", "13", "Spread", "1 3 5", "M7 9 13"),
             mutableListOf("Min7", "7", "Spread", "", ""),
+            mutableListOf("Alt", "b9", "Spread", "", ""),
+            mutableListOf("Dom7", "11", "Rootless", "", ""),
+            mutableListOf("Dim7", "b3", "Closed", "1", "6 b3 b5"),
+            mutableListOf("Maj7", "1", "Opened", "3 5 6", "M7 9 1"),
+            mutableListOf("Min7", "5", "Spread", "", ""),
             mutableListOf("Alt", "b9", "Spread", "", ""),
             mutableListOf("Dom7", "11", "Rootless", "", ""),
             mutableListOf("Dim7", "b3", "Closed", "1", "6 b3 b5"),
